@@ -17,26 +17,30 @@ class _CameraViewState extends State<CameraView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-     floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       floatingActionButton: Row(
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: [
-           FloatingActionButton.large(
-        child: const Icon(Icons.camera_alt),
-        onPressed: () {
-          controller?.toggleFlash();
-        },
-        heroTag: null,
-      ),
-       FloatingActionButton.large(
-        child: const Icon(Icons.flash_on),
-            
-        onPressed: () async{
-          await controller?.toggleFlash();
-          setState(() {});
-        },
-        heroTag: null,
-      ),
+          FloatingActionButton.large(
+            child: const Icon(Icons.arrow_back),
+            onPressed: () {
+              Navigator.of(context).pop();
+              
+            },
+            heroTag: null,
+          ),
+          FloatingActionButton.large(
+            child: FutureBuilder(
+              future: controller?.getFlashStatus(),
+              builder: (context, snapshot) => Icon(
+                  snapshot.data == true ? Icons.flash_on : Icons.flash_off),
+            ),
+            onPressed: () async {
+              await controller?.toggleFlash();
+              setState(() {});
+            },
+            heroTag: null,
+          ),
         ],
       ),
       body: QRView(
@@ -72,7 +76,7 @@ class _CameraViewState extends State<CameraView> {
     controller.scannedDataStream.first.then((scanData) {
       showModalBottomSheet(
           context: context,
-          barrierColor: Color(0x01000000),
+          barrierColor: const Color(0x01000000),
           builder: (context) {
             return QrModal(qrData: scanData.code);
           });

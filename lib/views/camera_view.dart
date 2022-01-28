@@ -63,7 +63,7 @@ class _CameraViewState extends State<CameraView> {
     if (!p) {
       const ScaffoldMessenger(
           child: SnackBar(
-        content: Text('Camera permission denied'),
+        content: Text('Camera permissions denied'),
         backgroundColor: Colors.red,
       ));
     }

@@ -9,7 +9,7 @@ jobs:
   merge_action:
     name: Analyze commit
     runs-on: windows-latest
-    steps:
+      steps:
       - uses: actions/checkout@v2
       - uses: actions/setup-java@v2
       with:

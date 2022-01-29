@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:qr_code_scanner/qr_code_scanner.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:flutter/services.dart';
+import 'package:validators/validators.dart';
 
 class CameraView extends StatefulWidget {
   const CameraView({Key? key}) : super(key: key);
@@ -196,7 +197,7 @@ class _CameraViewState extends State<CameraView> {
     controller.scannedDataStream.listen((scanData) {
       setState(() {
         _scanResult = scanData.code;
-        _validURL = Uri.parse(_scanResult!).isAbsolute;
+        _validURL = isURL(scanData.code);
         controller.pauseCamera();
       });
     });

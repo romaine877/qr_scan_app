@@ -70,7 +70,7 @@ class _CameraViewState extends State<CameraView> {
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: [
                       Center(
-                        child: Text(_scanResult!, style: TextStyle(fontSize: 20)),
+                        child: Text(_scanResult!, style: const TextStyle(fontSize: 20)),
                       ),
                       Padding(
                         padding: const EdgeInsets.all(8.0),

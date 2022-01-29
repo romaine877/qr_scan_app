@@ -21,6 +21,18 @@ class _HomePageState extends State<HomePage> {
       appBar: AppBar(
         title: const Text('QR Scanner'),
       ),
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: const <Widget>[
+           Text('Click below to scan QR code'),
+           SizedBox(height: 20),
+           Icon( Icons.arrow_circle_down,
+           size: 70,
+           color: Colors.indigo,)
+          ],
+        ),
+      ),
       
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       floatingActionButton: FloatingActionButton.large(

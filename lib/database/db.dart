@@ -32,7 +32,25 @@ class DatabaseHelper {
   Future<List<QrData>> getQrDataList() async {
     Database db = await instance.database;
     var dbResponse = await db.query('qrdata', orderBy: 'date');
-    List<QrData> qrList = dbResponse.isNotEmpty ? dbResponse.map((e) => QrData.fromMap(e)).toList() : [];
+    List<QrData> qrList = dbResponse.isNotEmpty ? dbResponse.map((item) => QrData.fromMap(item)).toList() : [];
     return qrList;
   }
+
+  Future<int> insertQrData(QrData qrData) async {
+    Database db = await instance.database;
+    return await db.insert('qrdata', qrData.toMap());
+    
+  }
+
+  Future<int> deleteQrData(QrData qrData) async {
+    Database db = await instance.database;
+    return await db.delete('qrdata', where: 'id = ?', whereArgs: [qrData.id]);
+  }
+
+  Future<void> deleteAllQrData() async {
+    Database db = await instance.database;
+    await db.delete('qrdata');
+  }
+
+  
 }

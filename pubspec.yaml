@@ -39,6 +39,7 @@ dependencies:
   validators: ^3.0.0
   sqflite: ^2.0.2
   path: ^1.8.0
+  date_time_format: ^2.0.1
 
 
 dev_dependencies:

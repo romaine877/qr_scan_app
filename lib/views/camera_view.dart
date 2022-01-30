@@ -1,8 +1,13 @@
+import 'package:date_time_format/date_time_format.dart';
 import 'package:flutter/material.dart';
 import 'package:qr_code_scanner/qr_code_scanner.dart';
+import 'package:qr_scan_app/database/db.dart';
+import 'package:qr_scan_app/models/qr_data.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:flutter/services.dart';
 import 'package:validators/validators.dart';
+
+import '../home_page.dart';
 
 class CameraView extends StatefulWidget {
   const CameraView({Key? key}) : super(key: key);
@@ -12,7 +17,7 @@ class CameraView extends StatefulWidget {
 }
 
 class _CameraViewState extends State<CameraView> {
-  bool? _validURL;
+  bool? _validURL = false;
   String? _scanResult;
   QRViewController? controller;
   int flexProperty = 2;
@@ -26,9 +31,11 @@ class _CameraViewState extends State<CameraView> {
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: [
           FloatingActionButton(
-            child: const Icon(Icons.arrow_back),
+            child: const Icon(Icons.history),
             onPressed: () {
-              Navigator.of(context).pop();
+              Navigator.of(context).push(MaterialPageRoute(
+                builder: (context) => const HomePage(),
+              ));
             },
             heroTag: null,
           ),
@@ -71,7 +78,8 @@ class _CameraViewState extends State<CameraView> {
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: [
                       Center(
-                        child: Text(_scanResult!, style: const TextStyle(fontSize: 20)),
+                        child: Text(_scanResult!,
+                            style: const TextStyle(fontSize: 20)),
                       ),
                       Padding(
                         padding: const EdgeInsets.all(8.0),
@@ -112,9 +120,8 @@ class _CameraViewState extends State<CameraView> {
                                   child: IconButton(
                                     icon: const Icon(Icons.refresh),
                                     onPressed: () {
+                                        _resumeScan();
                                       setState(() {
-                                        _scanResult = null;
-                                        _validURL = null;
                                         controller?.resumeCamera();
                                       });
                                     },
@@ -170,15 +177,14 @@ class _CameraViewState extends State<CameraView> {
   }
 
   void _launchURL() async {
-    if (!await launch(_scanResult!)){
+    if (!await launch(_scanResult!)) {
       SnackBar(content: Text('Could not launch $_scanResult!'));
       setState(() {
         _validURL = false;
-      
       });
       throw 'Could not launch $_scanResult!';
-    }}
-  
+    }
+  }
 
   void _onPermissionSet(BuildContext context, QRViewController ctrl, bool p) {
     if (!p) {
@@ -194,12 +200,32 @@ class _CameraViewState extends State<CameraView> {
     setState(() {
       this.controller = controller;
     });
-    controller.scannedDataStream.listen((scanData) {
+    controller.scannedDataStream.listen((scanData) async {
       setState(() {
         _scanResult = scanData.code;
         _validURL = isURL(scanData.code);
         controller.pauseCamera();
       });
+      if(_scanResult != null){
+
+        DatabaseHelper.instance.insertQrData(
+        QrData(
+          name: scanData.code!,
+          createdAt: DateTimeFormat.format(DateTime.now(),
+              format: DateTimeFormats.american),
+          isUrl: isURL(scanData.code) == true ? 1 : 0,
+        ),
+
+      );
+      }
+    });
+     
+  }
+
+  void _resumeScan() {
+    setState(() {
+      _scanResult = null;
+      _validURL = null;
     });
   }
 

@@ -17,7 +17,7 @@ class QrModal extends StatelessWidget {
           topRight: Radius.circular(20),
         ),
       ),
-      child: Card(child: Text(qrData!),),
+      child: Center(child: Card(child: Text(qrData!),)),
     );
   }
 }

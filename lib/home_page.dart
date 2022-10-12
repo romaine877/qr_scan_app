@@ -87,7 +87,7 @@ class _HomePageState extends State<HomePage> {
                         child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: const [
-                          Text('No Scanned Data',
+                          Text('No Scanned Data!',
                               style: TextStyle(fontSize: 20)),
                           Text('Tap the camera to scan a QR code',
                               style: TextStyle(fontSize: 16)),

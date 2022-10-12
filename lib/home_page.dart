@@ -117,7 +117,9 @@ class _HomePageState extends State<HomePage> {
                                             url + qrData.name)) {
                                           await launch(url + qrData.name);
                                         } else {
-                                          throw 'Could not launch $url';
+                                          SnackBar(
+                                              content: Text(
+                                                  'Could not launch $qrData.name!'));
                                         }
                                       },
                                       icon: const Icon(Icons.search)),

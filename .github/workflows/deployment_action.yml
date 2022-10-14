@@ -3,9 +3,10 @@ name: Flutter CI
 # This workflow is triggered on pushes to the repository.
 
 on:
-  pull_request:
+  push:
     branches:
     - main
+    - scanview-branch
     
 # on: push    # Default will running for every branch.
     

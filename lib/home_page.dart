@@ -14,8 +14,6 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   @override
   void initState() {
-    
-  
     super.initState();
   }
 
@@ -27,8 +25,6 @@ class _HomePageState extends State<HomePage> {
   Future<List<QrData>> refresh() async {
     return await DatabaseHelper.instance.getQrDataList();
   }
-
- 
 
   @override
   Widget build(BuildContext context) {
@@ -146,7 +142,6 @@ class _HomePageState extends State<HomePage> {
               ),
               (route) => false,
             );
-            
           },
           child: const Icon(Icons.camera_alt),
         ),

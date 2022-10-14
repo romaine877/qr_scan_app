@@ -32,14 +32,15 @@ class DatabaseHelper {
   Future<List<QrData>> getQrDataList() async {
     Database db = await instance.database;
     var dbResponse = await db.query('qrdata', orderBy: 'date');
-    List<QrData> qrList = dbResponse.isNotEmpty ? dbResponse.map((item) => QrData.fromMap(item)).toList() : [];
+    List<QrData> qrList = dbResponse.isNotEmpty
+        ? dbResponse.map((item) => QrData.fromMap(item)).toList()
+        : [];
     return qrList;
   }
 
   Future<int> insertQrData(QrData qrData) async {
     Database db = await instance.database;
     return await db.insert('qrdata', qrData.toMap());
-    
   }
 
   Future<int> deleteQrData(QrData qrData) async {
@@ -51,6 +52,4 @@ class DatabaseHelper {
     Database db = await instance.database;
     await db.delete('qrdata');
   }
-
-  
 }

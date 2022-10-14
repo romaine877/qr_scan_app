@@ -120,7 +120,7 @@ class _CameraViewState extends State<CameraView> {
                                   child: IconButton(
                                     icon: const Icon(Icons.refresh),
                                     onPressed: () {
-                                        _resumeScan();
+                                      _resumeScan();
                                       setState(() {
                                         controller?.resumeCamera();
                                       });
@@ -206,20 +206,17 @@ class _CameraViewState extends State<CameraView> {
         _validURL = isURL(scanData.code);
         controller.pauseCamera();
       });
-      if(_scanResult != null){
-
+      if (_scanResult != null) {
         DatabaseHelper.instance.insertQrData(
-        QrData(
-          name: scanData.code!,
-          createdAt: DateTimeFormat.format(DateTime.now(),
-              format: DateTimeFormats.american),
-          isUrl: isURL(scanData.code) == true ? 1 : 0,
-        ),
-
-      );
+          QrData(
+            name: scanData.code!,
+            createdAt: DateTimeFormat.format(DateTime.now(),
+                format: DateTimeFormats.american),
+            isUrl: isURL(scanData.code) == true ? 1 : 0,
+          ),
+        );
       }
     });
-     
   }
 
   void _resumeScan() {

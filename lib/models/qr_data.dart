@@ -1,11 +1,14 @@
-
 class QrData {
   final int? id;
   final String name;
   final int isUrl;
   final String createdAt;
 
-  QrData({required this.createdAt, required this.isUrl, this.id, required this.name});
+  QrData(
+      {required this.createdAt,
+      required this.isUrl,
+      this.id,
+      required this.name});
 
   factory QrData.fromMap(Map<String, dynamic> json) {
     return QrData(
